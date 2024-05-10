@@ -38,7 +38,7 @@ from lib.Segmentation.Clustering.Agglomerative import apply_agglomerative
 from lib.Segmentation.Clustering.region_growing import GrowRegion
 from lib.Segmentation.Clustering.mean_shift import shift_mean
 from lib.Segmentation.rgb_to_luv import RGB_to_Luv
-
+from lib.Face.face_detection import detect_and_display_faces
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -126,6 +126,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.ui.comboBox_clustering.activated.connect(self.hide_show_clustering)
         self.ui.pushButton_thresholding.clicked.connect(self.thresholding_methods)
         self.ui.pushButton_2.clicked.connect(self.map_to_luv)
+        self.ui.pushButton_harris_2.clicked.connect(self.detect_faces)
+
 
     def hide_show_clustering(self):
         # get method from combobox
@@ -294,6 +296,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                 self.label_for_colored_image(image, self.ui.widget_active_input)
                 self.label_for_colored_image(image, self.ui.widget_harris_input)
                 self.label_for_colored_image(image, self.ui.widget_seg_input)
+                self.label_for_colored_image(image, self.ui.widget_face_det_input)
+
+
 
             else:
                 # read image as Grayscale
@@ -302,6 +307,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                 self.label_for_image(image, self.ui.widget_active_input)
                 self.label_for_image(image, self.ui.widget_harris_input)
                 self.label_for_image(image, self.ui.widget_seg_input)
+                self.label_for_image(image, self.ui.widget_face_det_input)
+
 
             return image
 
@@ -1367,7 +1374,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.label_for_colored_image(luv_image, self.ui.widget_output)
 
     ############### TASK 5 ################ TASK 5 ################# TASK 5 ############# TASK 5 ############### TASK 5
+    def detect_faces(self):
+        image = self.read_img()
+        image_faces =detect_and_display_faces(image, 4,1.1,40)
 
+
+        if self.ui.checkBox.isChecked():
+            self.label_for_colored_image(image_faces, self.ui.widget_face_det_output)
+        else:
+            self.label_for_image(image_faces, self.ui.widget_face_det_output)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
