@@ -1366,6 +1366,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
         self.label_for_colored_image(luv_image, self.ui.widget_output)
 
+    ############### TASK 5 ################ TASK 5 ################# TASK 5 ############# TASK 5 ############### TASK 5
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
