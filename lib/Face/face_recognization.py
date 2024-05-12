@@ -15,13 +15,6 @@ def reshape_images(images, size=(100, 100)):
         reshaped_images.append(reshaped_image)
     return reshaped_images
 
-def construct_data_matrix(images):
-    """
-    Constructs a data matrix from a list of images.
-    """
-    data_matrix = np.vstack(images)
-    return data_matrix.T
-
 def get_mean_image(data_matrix):
     """
     Computes the mean image from a data matrix.
