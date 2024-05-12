@@ -2,12 +2,14 @@ import timeit
 
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap, QImage, QColor
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QDialog, QButtonGroup
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QDialog, QButtonGroup, QMessageBox
 import pyqtgraph as pg
 from typing import Optional
 import numpy as np
 import cv2
 import sys
+import math
+from PIL import Image
 from UI.ui import Ui_MainWindow
 from UI.histo import Ui_Form
 from UI.image_widget import ImagePlotter
@@ -39,6 +41,7 @@ from lib.Segmentation.Clustering.region_growing import GrowRegion
 from lib.Segmentation.Clustering.mean_shift import shift_mean
 from lib.Segmentation.rgb_to_luv import RGB_to_Luv
 from lib.Face.face_detection import detect_and_display_faces
+from lib.Face.face_recognization import find_faces
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -127,6 +130,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.ui.pushButton_thresholding.clicked.connect(self.thresholding_methods)
         self.ui.pushButton_2.clicked.connect(self.map_to_luv)
         self.ui.pushButton_harris_2.clicked.connect(self.detect_faces)
+        self.ui.pushButton_upload_face_rec.clicked.connect(self.upload_image_to_recognize)
+        self.ui.pushButton_apply_face_rec.clicked.connect(self.recognize_face)
 
 
     def hide_show_clustering(self):
@@ -1384,6 +1389,63 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         else:
             self.label_for_image(image_faces, self.ui.widget_face_det_output)
 
+    def upload_image_to_recognize(self):
+        """
+        Uploads an image to recognize the face.
+        """
+        file_dialog = QFileDialog(self)
+        file_dialog.setNameFilter("Images (*.png *.jpg *.jpeg *.bmp *.gif)")
+        file_dialog.setViewMode(QFileDialog.ViewMode.List)
+        file_dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
+        if file_dialog.exec():
+            self.recognize_image_path = file_dialog.selectedFiles()[0]
+            recognize_image = Image.open(self.recognize_image_path)
+            recognize_image.save("recognize_image.png")
+            recognize_image = cv2.imread("recognize_image.png")
+            self.label_for_colored_image(recognize_image, self.ui.widget_face_rec_input)
+
+    def recognize_face(self):
+        """
+        Recognizes the face in the uploaded image.
+        """
+        test_image_path = self.recognize_image_path
+        detected_label, images = find_faces(test_image_path)
+
+        if not detected_label:
+            QMessageBox.warning(self, "Warning", "NOT recognized!")
+        else:
+            self.ui.label_name.setText(detected_label)
+            combined_image = self.combine_images(images)
+            combined_image.save("combined_image.png")
+            result = cv2.imread("combined_image.png")
+            self.label_for_colored_image(result, self.ui.widget_face_rec_output)
+
+
+    def combine_images(self, images):
+        """
+        Combines multiple images into a single image grid.
+        Parameters:
+            images (list): A list of PIL images to be combined.
+
+        Returns:
+            combined_image (PIL.Image): The combined image grid.
+        """
+        num_images = len(images)
+        grid_size = math.ceil(math.sqrt(num_images))
+        # Resize images to a square size
+        square_size = 100  # Define the desired square size
+        resized_images = [image.resize((square_size, square_size)) for image in images]
+        # Create a blank square image to hold the combined images
+        combined_image = Image.new('L', (grid_size * square_size, grid_size * square_size))
+        # Arrange the resized images in a grid
+        for i, image in enumerate(resized_images):
+            x = (i % grid_size) * square_size
+            y = (i // grid_size) * square_size
+            combined_image.paste(image, (x, y))
+        
+        return combined_image
+
+        
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     # app.setQuitOnLastWindowClosed(False)
