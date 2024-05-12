@@ -11,7 +11,7 @@ def detect_and_display_faces(image_data, rect_thickness, scale_factor, min_windo
     :param scale_factor: Scale factor for face detection
     :param min_window_size: Minimum window size for face detection
     """
-    # Convert image data to RGB
+    # Convert image data to RGB : done when display image
     image_rgb = image_data
 
     # Ensure scale_factor is greater than 1.0
@@ -21,6 +21,9 @@ def detect_and_display_faces(image_data, rect_thickness, scale_factor, min_windo
     start_time = timeit.default_timer()
 
     # Detect faces in the image
+    #  The Haar cascade classifier for face detection is loaded using cv2.CascadeClassifier.
+    #  Then, detectMultiScale function is used to detect faces in the image.
+    #  This function returns a list of rectangles, each representing a detected face.(list of lists)
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
     faces = face_cascade.detectMultiScale(image_data, scaleFactor=scale_factor, minNeighbors=5,
                                            minSize=(min_window_size, min_window_size))
@@ -39,7 +42,8 @@ def detect_and_display_faces(image_data, rect_thickness, scale_factor, min_windo
     # cv2.imshow('Detected Faces', cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR))
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
-
+    print(faces)
     print(f"Found {len(faces)} Faces!")
+
     print(f"Elapsed Time for Face Detection: {elapsed_time} seconds")
     return image_rgb

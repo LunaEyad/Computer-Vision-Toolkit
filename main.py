@@ -1381,7 +1381,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     ############### TASK 5 ################ TASK 5 ################# TASK 5 ############# TASK 5 ############### TASK 5
     def detect_faces(self):
         image = self.read_img()
-        image_faces =detect_and_display_faces(image, 4,1.1,40)
+        image_faces =detect_and_display_faces(image, 4, 1.1, 40)
 
 
         if self.ui.checkBox.isChecked():
@@ -1442,7 +1442,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             x = (i % grid_size) * square_size
             y = (i // grid_size) * square_size
             combined_image.paste(image, (x, y))
-        
+
         return combined_image
 
         

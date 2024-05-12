@@ -103,7 +103,7 @@ def recognize_face(test_image, mean_image, selected_eigen_vectors, threshold=450
         return -1
     
 # Load training images
-training_path = r"C:\Users\maria\Downloads\dataset_gif\train"
+training_path = "/Users/lunaeyad/PycharmProjects/CV_task5/dataset_recognize/train"
 training_images = []
 training_labels = []
 for person_folder in os.listdir(training_path):
