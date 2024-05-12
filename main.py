@@ -1412,7 +1412,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         detected_label, images = find_faces(test_image_path)
 
         if not detected_label:
-            QMessageBox.warning(self, "Warning", "NOT recognized!")
+            QMessageBox.warning(self, "Warning", "NOT Recognized!")
         else:
             self.ui.label_name.setText(detected_label)
             combined_image = self.combine_images(images)
@@ -1424,6 +1424,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def combine_images(self, images):
         """
         Combines multiple images into a single image grid.
+
         Parameters:
             images (list): A list of PIL images to be combined.
 
