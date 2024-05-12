@@ -1755,7 +1755,7 @@
               <item>
                <widget class="QLabel" name="label_30">
                 <property name="text">
-                 <string>Face Recognaized :</string>
+                 <string>Recognaized Face :</string>
                 </property>
                </widget>
               </item>
@@ -1775,7 +1775,7 @@
             <item row="2" column="6">
              <widget class="QPushButton" name="pushButton_apply_face_rec">
               <property name="text">
-               <string>Apply</string>
+               <string>Search</string>
               </property>
              </widget>
             </item>
