@@ -1,7 +1,6 @@
 import numpy as np
 import os
 from PIL import Image
-import matplotlib.pyplot as plt
 
 # Reshape and resize images to 1D vectors
 def reshape_images(images, size=(100, 100)):
@@ -14,6 +13,13 @@ def reshape_images(images, size=(100, 100)):
         reshaped_image = np.array(resized_image).flatten()
         reshaped_images.append(reshaped_image)
     return reshaped_images
+
+def construct_data_matrix(images):
+    """
+    Constructs a data matrix from a list of images.
+    """
+    data_matrix = np.vstack(images)
+    return data_matrix.T
 
 def get_mean_image(data_matrix):
     """
@@ -119,7 +125,7 @@ mean_image = get_mean_image(data_matrix)
 # Subtract the mean image from all images
 subtracted_images = subtract_mean_image(data_matrix, mean_image)
 # Perform PCA to reduce dimensionality
-num_components = 23  # You can adjust this number as needed
+num_components = 23
 projected_data, selected_eigen_vectors = perform_pca(subtracted_images, num_components)
 # Map images to new components
 mapped_components = map_to_components(subtracted_images, selected_eigen_vectors)
@@ -127,20 +133,15 @@ mapped_components = map_to_components(subtracted_images, selected_eigen_vectors)
 def find_faces(test_image_path):
     test_image = Image.open(test_image_path).convert("L")  # Convert to grayscale
     resized_test_image = test_image.resize((100, 100), Image.BILINEAR)
-    resized_test_image = resized_test_image.convert("L")
-
-    # Now you can pass the resized_test_image to the recognize_face function
     recognized_index = recognize_face(resized_test_image, mean_image, selected_eigen_vectors)
 
     detected_label = []
     detected_images = []
 
     if recognized_index != -1:
-        recognized_label = training_labels[recognized_index]
-        print("Recognized Label:", recognized_label)
-
-        # Load all training images for the detected label
         detected_label = training_labels[recognized_index]
+        print("Recognized Label:", detected_label)
+        # Load all training images for the recognized label
         detected_images = [training_images[i] for i, label in enumerate(training_labels) if label == detected_label]
 
     return detected_label, detected_images
