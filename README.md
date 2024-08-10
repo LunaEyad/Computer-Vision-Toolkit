@@ -107,8 +107,6 @@ This project is a comprehensive graphical user interface (GUI) application desig
 ![image](https://github.com/user-attachments/assets/110947d1-29ce-4aa5-bc3f-3d342c589a7d)
 
 
----
-
 ## Usage
 
 1. **Upload Image**: Select and upload the image you want to process. Choose whether it is colored or not from the "colored" checkbox.
