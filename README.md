@@ -1,6 +1,6 @@
 # Computer Vision Tools
 
-This project is a comprehensive graphical user interface (GUI) application designed for a variety of computer vision tasks. Whether you're interested in edge detection, shape recognition, face detection, or image segmentation, this tool provides a user-friendly interface that harnesses the power of advanced image processing techniques. Built using PyQt and powered by the robust OpenCV library.
+Welcome to the Computer Vision Toolkit! This project is a comprehensive graphical user interface (GUI) application designed for a variety of computer vision tasks. Whether you're interested in edge detection, shape recognition, face detection, or image segmentation, this tool provides a user-friendly interface that harnesses the power of advanced image processing techniques. Built using PyQt and powered by the robust OpenCV library.
 
 ## Tasks Implemented:
 
@@ -72,7 +72,7 @@ This project is a comprehensive graphical user interface (GUI) application desig
 - **Harris Corner Detection**:
   - Detect corners in images using the Harris corner detection algorithm.
   - Visualize the detected corners by overlaying them on the original image.
-    ![image](https://github.com/user-attachments/assets/122fbdc5-4eed-4b59-a533-02b2205275ea)
+![image](https://github.com/user-attachments/assets/08b68f50-6ff1-43e1-a5da-39bfcbd692ca)
 
 
 ### Tab 7: Feature Matching
@@ -87,7 +87,7 @@ This project is a comprehensive graphical user interface (GUI) application desig
 - **Image Segmentation**:
   - Segment images into different regions using techniques like thresholding, region growing, or clustering.
   - Display the segmented regions with distinct colors or boundaries.
-    ![image](https://github.com/user-attachments/assets/5d1e8d8e-99bc-4a82-8df1-0107f7a3db2e)
+![image](https://github.com/user-attachments/assets/5d1e8d8e-99bc-4a82-8df1-0107f7a3db2e)
 
 
 ### Tab 9: Face Detection
@@ -104,7 +104,6 @@ This project is a comprehensive graphical user interface (GUI) application desig
   - Recognize and identify faces in images using machine learning models or pre-trained neural networks.
   - Display the names or labels of recognized individuals on the images.
 ![image](https://github.com/user-attachments/assets/1ecb245f-33a4-408b-a003-484f9c653bd3)
-![image](https://github.com/user-attachments/assets/110947d1-29ce-4aa5-bc3f-3d342c589a7d)
 
 
 ## Usage
@@ -128,6 +127,9 @@ This project is a comprehensive graphical user interface (GUI) application desig
   - OpenCV
   - Matplotlib
   - PyQt5
+  - PyQtGraph
+  - PIL
+  
 
 ## Files
 
